@@ -1,0 +1,47 @@
+services:
+    app:
+        build:
+            args:
+                user: zebrands-test-user
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: zebrands-test_backend_img
+        container_name: zebrands-test_backend
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - zebrand-test
+    db:
+        image: mysql:8.0
+        container_name: management-products-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: zebrands-test-db
+            MYSQL_ROOT_PASSWORD: ZebrandsDb20204
+            MYSQL_PASSWORD: ZebrandsDb2024
+            MYSQL_USER: ZebrandsDb
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+        ports:
+            - 3306:3306
+        networks:
+            - zebrand-test
+    nginx:
+        image: nginx:alpine
+        container_name: zebrand-test-backend-nginx
+        restart: unless-stopped
+        ports:
+            - 5173:80
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+        networks:
+            - zebrand-test
+networks:
+    zebrand-test:
+        driver: bridge
