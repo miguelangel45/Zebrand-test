@@ -10,7 +10,7 @@ You should have a Mysql database to run this project
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/miguelangel45/Zebrand-test
 ```
 
 Go to the project directory
@@ -41,6 +41,7 @@ This project contains a docker-compose file to make easier the deployment in loc
 to run this with docker you must have installed [Docker](https://docs.docker.com/) on your machine
 
 To deploy run the following command
+
 ``` bash
 docker-compose up
 ```
@@ -49,7 +50,22 @@ this will install all the dependencies and serves the application instantly
 
 ## API Reference
 
-To see the api reference of this project
+To see the api reference of this project you can open this url on your browser when you have the service up and running
+
+[http://localhost:5173/idoc](http://localhost:5173/idoc)
+
+replace the port if you needed
+
+### Note about email notification
+
+To run successfully the email notification process, you must run the following command on a terminal (if you use docker
+to deploy, inside the container where the code is allocated) 
+
+```bash
+    php artisan queue:work
+```
+
+this command will continue to run until its manually stopped or the terminal closes.
 
 ## License
 
